@@ -4,8 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.ApplicationTokens;
-import play.*;
+import mongo.Server;
 import play.mvc.*;
 
 import views.html.*;
@@ -16,11 +15,11 @@ import java.util.List;
 
 public class Application extends Controller {
 
-    public static Result index() {
+    public /*static*/ Result index() {
         return ok(index.render("Your new application is ready."));
     }
 
-    public static Result accesspoint() {
+    public Result accesspoint() {
         JsonNode json = request().body().asJson();
         String access_token = json.get("access_token").asText();
         String access_source = json.get("access_source").asText();
@@ -38,10 +37,18 @@ public class Application extends Controller {
         //System.out.print(deltaTime+", ");
         //System.out.println(sqlRow.getString("application_id"));
 
+        Duration deltaTime = Duration.ZERO;
+        Instant beginTime = Instant.now();
+        Server server = Server.findByPort(8001);
+        deltaTime = Duration.between(beginTime, Instant.now());
+        System.out.print(deltaTime+", ");
+
+        System.out.println(server.id);
+
         return ok(sqlRow.getString("application_id"));
     }
 
-    public static Result accesspointList() {
+    public Result accesspointList() {
         return Results.TODO;
     }
 }
