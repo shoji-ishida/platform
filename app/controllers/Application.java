@@ -46,11 +46,10 @@ public class Application extends Controller {
 
         // List for sorting
         List<Map.Entry<Server,Long>> entries = new ArrayList<Map.Entry<Server, Long>>(counts.entrySet());
-        Collections.sort(entries, new Comparator<Map.Entry<Server, Long>>() {
-            public int compare(Map.Entry<Server,Long> entry1, Map.Entry<Server,Long> entry2) {
-                return ((Long)entry1.getValue()).compareTo((Long)entry2.getValue());
-            }
-        });
+
+        Comparator<Map.Entry<Server, Long>> comp = (Map.Entry<Server,Long> entry1, Map.Entry<Server,Long> entry2) ->
+                (int)(entry1.getValue()).compareTo(entry2.getValue());
+        entries.sort(comp);
 
         Server target = (Server) entries.get(0).getKey();
         String uri = "wss://"+target.hostname+target.path_prefix+"/"+sqlRow.getString("application_id");
