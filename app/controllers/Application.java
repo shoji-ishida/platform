@@ -16,8 +16,6 @@ import views.html.*;
 
 import java.util.*;
 
-import static play.libs.F.Promise.promise;
-
 public class Application extends Controller {
 
     public Result index() {
