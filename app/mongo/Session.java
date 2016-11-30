@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import play.Play;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 /**
@@ -31,7 +30,7 @@ public class Session {
     public static MongoCursor<Session> getSessions() {
         return sessions().find().as(Session.class);
     }
-    
+
     public static long getCount(String nodeId) {
         long count = sessions().count("{node_id: #, type: 'websocket'}", nodeId);
         return count;
